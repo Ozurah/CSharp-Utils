@@ -12,10 +12,12 @@ namespace Ozurah.Utils
     {
         public static OrderedDictionary<Type, (string startSeq, string endSeq)> Indicator { get; private set; } = new()
         {
+            // Les éléments de bases, servant à construire les autres via `BuildIndicatorFor`
             { typeof(string), ("\"", "\"") },
             { typeof(char), ("'", "'") },
             { typeof(Dictionary<,>), ("{", "}") },
-            { typeof(List<>), ("[", "]") },
+            { typeof(List<>), ("l[", "]") },
+            { typeof(object[]), ("a[", "]") },
             { typeof(IEnumerable), ("col(", ")") },
         };
 
@@ -33,16 +35,25 @@ namespace Ozurah.Utils
         {
             if (!Indicator.ContainsKey(obj.GetType()))
             {
-                WriteLine(obj);
+                if (obj.GetType().IsArray)
+                {
+                    Indicator.Insert(0, obj.GetType(), Indicator[typeof(object[])]);
+                    return;
+                }
 
                 foreach (var kv in Indicator)
                 {
-                    if (kv.Key.IsInstanceOfType(obj))
+                    WriteLine(kv.Key);
+                    WriteLine(obj);
+
+                    if (obj.GetType().IsGenericType && kv.Key.IsGenericType && kv.Key.IsAssignableFrom(obj.GetType().GetGenericTypeDefinition()))
                     {
                         Indicator.Insert(0, obj.GetType(), kv.Value);
-                        break;
+                        return;
                     }
                 }
+
+                Indicator.Insert(0, obj.GetType(), ("", ""));
             }
         }
 

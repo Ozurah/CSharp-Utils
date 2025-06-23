@@ -28,8 +28,8 @@ namespace DevUtils
                 );
 
             Printer.WriteLine(Printer.Indicator);
-            Printer.Indicator.TryAdd(typeof(int), ("int(", ")"));
-            Printer.WriteLine(Printer.Indicator);
+            //Printer.Indicator.TryAdd(typeof(int), ("int(", ")"));
+            //Printer.WriteLine(Printer.Indicator);
 
         }
     }
