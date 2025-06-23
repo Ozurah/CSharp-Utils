@@ -13,5 +13,19 @@ namespace DevUtils
             InitializeComponent();
             Class1.HelloWorld();
         }
+
+        private void Printer_1_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.Print("hello",
+                123,
+                'c',
+                new int[] { 1, 2, 3 },
+                new List<int> { 1, 2, 3 },
+                new Dictionary<int, string> {
+                    { 1, "Hello" }, { 2, "World" }
+                },
+                new object?[] { "hij", null, 9 }
+                );
+        }
     }
 }
