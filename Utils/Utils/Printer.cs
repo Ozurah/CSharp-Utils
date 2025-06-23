@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,8 +15,8 @@ namespace Ozurah.Utils
             // Les éléments de bases, servant à construire les autres via `BuildIndicatorFor`
             { typeof(string), ("\"", "\"") },
             { typeof(char), ("'", "'") },
-            { typeof(Dictionary<,>), ("{", "}") },
-            { typeof(List<>), ("l[", "]") },
+            //{ typeof(Dictionary<,>), ("{", "}") },
+            //{ typeof(List<>), ("l[", "]") },
             { typeof(object[]), ("a[", "]") },
             { typeof(IEnumerable), ("col(", ")") },
         };
@@ -35,12 +35,14 @@ namespace Ozurah.Utils
         {
             if (!Indicator.ContainsKey(obj.GetType()))
             {
+                // Check 1 : Tableau
                 if (obj.GetType().IsArray)
                 {
                     Indicator.Insert(0, obj.GetType(), Indicator[typeof(object[])]);
                     return;
                 }
 
+                // Check 2 : Objet existant vers un générique
                 foreach (var kv in Indicator)
                 {
                     WriteLine(kv.Key);
@@ -53,6 +55,17 @@ namespace Ozurah.Utils
                     }
                 }
 
+                // Check 3 : Héritage
+                foreach (var kv in Indicator)
+                {
+                    if (kv.Key.IsInstanceOfType(obj))
+                    {
+                        Indicator.Insert(0, obj.GetType(), kv.Value);
+                        return;
+                    }
+                }
+
+                // Check 4 : Non trouvé
                 Indicator.Insert(0, obj.GetType(), ("", ""));
             }
         }
