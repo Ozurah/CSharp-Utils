@@ -29,6 +29,23 @@ namespace Ozurah.Utils
             WriteLine(PrintStr(args));
         }
 
+        private static void BuildIndicatorFor(object obj)
+        {
+            if (!Indicator.ContainsKey(obj.GetType()))
+            {
+                WriteLine(obj);
+
+                foreach (var kv in Indicator)
+                {
+                    if (kv.Key.IsInstanceOfType(obj))
+                    {
+                        Indicator.Insert(0, obj.GetType(), kv.Value);
+                        break;
+                    }
+                }
+            }
+        }
+
         public static string PrintStr(params object[] args)
         {
             const string SEPARATOR = ", ";
@@ -39,12 +56,12 @@ namespace Ozurah.Utils
                 if (!first)
                     text += SEPARATOR;
 
-
-
                 if (arg is null)
                     text += "null";
                 else
                 {
+                    BuildIndicatorFor(arg);
+
                     // TryGetValue ne supporte pas les Null
                     Indicator.TryGetValue(arg.GetType(), out (string startSeq, string endSeq) indication);
 
@@ -52,8 +69,6 @@ namespace Ozurah.Utils
 
                     if (arg is IEnumerable enumerable && arg is not string)
                     {
-                        text += "***";
-
                         //text += "[" + string.Join(", ", enumerable.Select(t => t.ToString())) + "]"; // IEnumerable (et pas IEnumerable<object> par exemple) n'a pas le `.Select`
 
                         bool firstCol = true;
@@ -63,7 +78,6 @@ namespace Ozurah.Utils
                             text += PrintStr(item);
                             firstCol = false;
                         }
-                        text += "***";
                     }
                     else
                     {
