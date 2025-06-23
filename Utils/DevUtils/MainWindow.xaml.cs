@@ -26,6 +26,11 @@ namespace DevUtils
                 },
                 new object?[] { "hij", null, 9 }
                 );
+
+            Printer.WriteLine(Printer.Indicator);
+            Printer.Indicator.TryAdd(typeof(int), ("int(", ")"));
+            Printer.WriteLine(Printer.Indicator);
+
         }
     }
 }
