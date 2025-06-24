@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +11,29 @@ namespace Ozurah.Utils
 {
     public class Printer
     {
+        /* TODO Problèmes connus / a venir
+         * 
+            Printer.Print(new string[] { "a", "b", "c" });
+            Printer.Print(new string[][] { new string[] { "a", "b" }, new string[] { "c", "d" } });
+            Printer.Print(new object[] {new string[] { "a", "b" } });
+
+            -->
+
+            "a", "b", "c"
+            a["a", "b"], a["c", "d"]
+            a["a", "b"]
+
+            
+            ==> On perd l'info du premier niveau du tableau, car il viens se décomposer dans l'args (idem pour tout autre "type référence" !)
+         * 
+         * 
+         * 
+            Print des objets
+            Print des struct
+            Print des namedtuple
+         * 
+         */
+
         private const string NULL_REPR = "null";
 
         public static OrderedDictionary<Type, (string startSeq, string endSeq)> Indicator { get; private set; } = new()
