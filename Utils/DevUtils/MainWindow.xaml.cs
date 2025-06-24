@@ -1,4 +1,4 @@
-﻿using Ozurah.Utils;
+using Ozurah.Utils;
 using System.Windows;
 
 namespace DevUtils
@@ -24,7 +24,29 @@ namespace DevUtils
                 new Dictionary<int, string> {
                     { 1, "Hello" }, { 2, "World" }
                 },
-                new object?[] { "hij", null, 9 }
+                new object?[] { "hij", null, 9 },
+                new Dictionary<object, List<string>> {
+                    { 1, new List<string> { "a", "b" } },
+                    { 'c', new List<string> { "de", "fg" } },
+                    { new List<string> { "key", "Key" }, new List<string> { "val", "Val" } }
+                },
+                new Dictionary<object, object> {
+                    { "niv1",
+                        new Dictionary<object, object> {
+                            { "niv2",
+                                new Dictionary<object, object> {
+                                    { "niv3", "Hello" }, { "niv3b", "World" }
+                                }
+                            }, { "niv2b",
+                                new Dictionary<object, object> {
+                                    { "niv3", new int[] { 7,8,9} }, { "niv3b", null }
+                                }
+                            }
+                        }
+                    },
+                    { 'c', new List<string> { "de", "fg" } },
+                    { new List<string> { "key", "Key" }, new List<string> { "val", "Val" } }
+                }
                 );
 
             Printer.WriteLine(Printer.Indicator);

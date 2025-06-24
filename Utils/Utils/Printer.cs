@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,8 +15,8 @@ namespace Ozurah.Utils
             // Les éléments de bases, servant à construire les autres via `BuildIndicatorFor`
             { typeof(string), ("\"", "\"") },
             { typeof(char), ("'", "'") },
-            //{ typeof(Dictionary<,>), ("{", "}") },
-            //{ typeof(List<>), ("l[", "]") },
+            { typeof(Dictionary<,>), ("{", "}") },
+            { typeof(List<>), ("l[", "]") },
             { typeof(object[]), ("a[", "]") },
             { typeof(IEnumerable), ("col(", ")") },
         };
@@ -94,12 +94,24 @@ namespace Ozurah.Utils
                     if (arg is IEnumerable enumerable && arg is not string)
                     {
                         //text += "[" + string.Join(", ", enumerable.Select(t => t.ToString())) + "]"; // IEnumerable (et pas IEnumerable<object> par exemple) n'a pas le `.Select`
-
+                        
                         bool firstCol = true;
                         foreach (var item in enumerable)
                         {
                             if (!firstCol) text += SEPARATOR;
-                            text += PrintStr(item);
+
+                            // https://stackoverflow.com/questions/2729614/c-sharp-reflection-how-can-i-tell-if-object-o-is-of-type-keyvaluepair-and-then
+                            Type type = item.GetType();
+                            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
+                            {
+                                var key = type.GetProperty("Key")?.GetValue(item, null);
+                                var value = type.GetProperty("Value")?.GetValue(item, null);
+
+                                text += PrintStr(key);
+                                text += ": ";
+                                text += PrintStr(value);
+                            } else
+                                text += PrintStr(item);
                             firstCol = false;
                         }
                     }
