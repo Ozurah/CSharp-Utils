@@ -16,6 +16,13 @@ namespace DevUtils
 
         private void Printer_1_Click(object sender, RoutedEventArgs e)
         {
+            Printer.WriteLine(null, 1);
+            Printer.WriteLine(null);
+            Printer.WriteLine("Test");
+
+            Printer.Print(null);
+            Printer.Print(1);
+            Printer.Print(null, 1);
             Printer.Print("hello",
                 123,
                 'c',

@@ -10,6 +10,8 @@ namespace Ozurah.Utils
 {
     public class Printer
     {
+        private const string NULL_REPR = "null";
+
         public static OrderedDictionary<Type, (string startSeq, string endSeq)> Indicator { get; private set; } = new()
         {
             // Les éléments de bases, servant à construire les autres via `BuildIndicatorFor`
@@ -21,18 +23,24 @@ namespace Ozurah.Utils
             { typeof(IEnumerable), ("col(", ")") },
         };
 
-        public static void WriteLine(params object[] args)
+        public static void WriteLine(params object?[]? args)
         {
-            Debug.WriteLine(string.Join(", ", args));
+            Debug.WriteLine(
+                args is null ?
+                NULL_REPR :
+                string.Join(", ", args.Select(x => x ?? NULL_REPR))
+            );
         }
 
-        public static void Print(params object[] args)
+        public static void Print(params object?[]? args)
         {
             WriteLine(PrintStr(args));
         }
 
-        private static void BuildIndicatorFor(object obj)
+        private static void BuildIndicatorFor(object? obj)
         {
+            if (obj is null) return;
+
             if (!Indicator.ContainsKey(obj.GetType()))
             {
                 // Check 1 : Tableau
@@ -70,8 +78,12 @@ namespace Ozurah.Utils
             }
         }
 
-        public static string PrintStr(params object[] args)
+        public static string PrintStr(params object?[]? args)
         {
+            if (args is null)
+            {
+                return NULL_REPR;
+            }
             const string SEPARATOR = ", ";
             string text = "";
             bool first = true;
@@ -81,7 +93,7 @@ namespace Ozurah.Utils
                     text += SEPARATOR;
 
                 if (arg is null)
-                    text += "null";
+                    text += NULL_REPR;
                 else
                 {
                     BuildIndicatorFor(arg);
@@ -94,15 +106,15 @@ namespace Ozurah.Utils
                     if (arg is IEnumerable enumerable && arg is not string)
                     {
                         //text += "[" + string.Join(", ", enumerable.Select(t => t.ToString())) + "]"; // IEnumerable (et pas IEnumerable<object> par exemple) n'a pas le `.Select`
-                        
+
                         bool firstCol = true;
                         foreach (var item in enumerable)
                         {
                             if (!firstCol) text += SEPARATOR;
 
                             // https://stackoverflow.com/questions/2729614/c-sharp-reflection-how-can-i-tell-if-object-o-is-of-type-keyvaluepair-and-then
-                            Type type = item.GetType();
-                            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
+                            Type? type = item?.GetType();
+                            if (type is not null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
                             {
                                 var key = type.GetProperty("Key")?.GetValue(item, null);
                                 var value = type.GetProperty("Value")?.GetValue(item, null);
@@ -110,7 +122,8 @@ namespace Ozurah.Utils
                                 text += PrintStr(key);
                                 text += ": ";
                                 text += PrintStr(value);
-                            } else
+                            }
+                            else
                                 text += PrintStr(item);
                             firstCol = false;
                         }
