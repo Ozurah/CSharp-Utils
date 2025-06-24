@@ -20,11 +20,23 @@ namespace DevUtils
                 123,
                 'c',
                 new int[] { 1, 2, 3 },
+                new int[,] { { 1, 2, 3 }, { 4, 5, 6 } }, // 2D array
+                new int[][] { // Jagged array
+                    new int[] {1, 2, 3, 4},
+                    new int[] {12, 34, 56}
+                },
+
                 new List<int> { 1, 2, 3 },
                 new Dictionary<int, string> {
                     { 1, "Hello" }, { 2, "World" }
                 },
                 new object?[] { "hij", null, 9 },
+                true,
+                new List<object> {
+                    new Dictionary<int, string> {
+                        { 1, "Hello" }, { 2, "World" }
+                    }
+                },
                 new Dictionary<object, List<string>> {
                     { 1, new List<string> { "a", "b" } },
                     { 'c', new List<string> { "de", "fg" } },
