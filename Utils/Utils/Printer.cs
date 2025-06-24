@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,7 @@ namespace Ozurah.Utils
             { typeof(Dictionary<,>), ("{", "}") },
             { typeof(List<>), ("l[", "]") },
             { typeof(object[]), ("a[", "]") },
+            { typeof(ITuple), ("(", ")") },
             { typeof(IEnumerable), ("col(", ")") },
         };
 
@@ -127,6 +129,18 @@ namespace Ozurah.Utils
                                 text += PrintStr(item);
                             firstCol = false;
                         }
+                    }
+                    else if (typeof(ITuple).IsAssignableFrom(arg.GetType()))
+                    {
+                        // ToArray pour transformer l'enumerable en params (devient un object[] (=>  args = [1, 2, 3] ))
+                        // Remarque :
+                        //  Si on avait new List<object> { 1, 2, 3 }.ToArray(), ça marcherait aussi car devient un object[] (=>  args = [1, 2, 3])
+                        //          Idem pour des instances d'objets (ex. List<Person>...ToArray() )
+                        //            ou string / autres types references
+                        //  Par contre, new List<int> { 1, 2, 3 }.ToArray() ne marcherait pas car devient un int[], et donc est transmis comme un int[3] à l'index 0 (=>  args = [[1, 2, 3]] )
+                        //          Idem pour les autres types valeurs (bool, float, ... https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types )
+                        //  !!!! Les strings ne sont pas des types valeurs, mais des types références !! https://stackoverflow.com/questions/636932/in-c-why-is-string-a-reference-type-that-behaves-like-a-value-type
+                        text += PrintStr((arg as ITuple)?.AsEnumerable().ToArray());
                     }
                     else
                     {

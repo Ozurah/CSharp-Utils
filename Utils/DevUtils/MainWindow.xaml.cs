@@ -68,6 +68,7 @@ namespace DevUtils
                 }
                 );
 
+            Printer.Print(("tuple", 1, 2, 3, ("tuple tuple", 1, new object?[] { "a", 'b', 3, null })));
             Printer.WriteLine(Printer.Indicator);
             //Printer.Indicator.TryAdd(typeof(int), ("int(", ")"));
             //Printer.WriteLine(Printer.Indicator);
