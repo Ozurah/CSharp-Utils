@@ -95,6 +95,8 @@ namespace DevUtils
             Printer.Print(new Structure { Id = 1, Name = "Test" });
             Printer.Print(new Coords(11, "txt"));
             Printer.Print(new CoordsNoToString(11, "txt"));
+
+            Printer.Print(Category.A, Category.B, (int)Category.A, (int)Category.B);
         }
 
         private void Printer_2_Click(object sender, RoutedEventArgs e)
@@ -223,5 +225,11 @@ namespace DevUtils
         {
             return $"{Code}";
         }
+    }
+
+    public enum Category
+    {
+        A,
+        B = 10
     }
 }
