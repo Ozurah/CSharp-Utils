@@ -114,14 +114,29 @@ namespace DevUtils
 
         private void Printer_3_Click(object sender, RoutedEventArgs e)
         {
-            Printer.PrintObject(new Structure { Id = 1, Name = "Test" });
-            Printer.PrintObject(new Coords(1, "Test"));
-            Printer.PrintObject(new CoordsNoToString(1, "Test"));
+            // Sans PrintStr
+            {
+                Printer.PrintObject(new Structure { Id = 1, Name = "Test" }, false);
+                Printer.PrintObject(new Coords(1, "Test"), false);
+                Printer.PrintObject(new CoordsNoToString(1, "Test"), false);
 
-            (string a, int b) namedtuple = new("txt", 1);
-            Printer.PrintObject(namedtuple);
+                (string a, int b) namedtuple = new("txt", 1);
+                Printer.PrintObject(namedtuple, false);
 
-            Printer.PrintObject(new Person());
+                Printer.PrintObject(new Person(), false);
+            }
+
+            // avec PrintStr
+            {
+                Printer.PrintObject(new Structure { Id = 1, Name = "Test" }, true);
+                Printer.PrintObject(new Coords(1, "Test"), true);
+                Printer.PrintObject(new CoordsNoToString(1, "Test"), true);
+
+                (string a, int b) namedtuple = new("txt", 1);
+                Printer.PrintObject(namedtuple, true);
+
+                Printer.PrintObject(new Person(), true);
+            }
         }
     }
 

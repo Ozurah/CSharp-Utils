@@ -189,7 +189,7 @@ namespace Ozurah.Utils
             return text;
         }
 
-        public static void PrintObject(object obj)
+        public static void PrintObject(object obj, bool usePrintStr = false)
         {
             // Permet d'afficher les champs/propriété publics d'un objet (ou struct)
 
@@ -200,14 +200,22 @@ namespace Ozurah.Utils
             // Champs (public uniquement), possibilité d'ajouter d'autres flags pour les privé par exemple
             foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
             {
-                Debug.WriteLine($"(Field) {field.Name} = {field.GetValue(obj)}");
+                var value = field.GetValue(obj);
+                if (usePrintStr)
+                    value = PrintStr(value);
+                Debug.WriteLine($"(Field) {field.Name} = {value}");
             }
 
             // Propriétés (si le struct en a)
             foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                if (prop.CanRead)
-                    Debug.WriteLine($"(Property) {prop.Name} = {prop.GetValue(obj)}");
+                if (!prop.CanRead)
+                    continue;
+
+                var value = prop.GetValue(obj);
+                if (usePrintStr)
+                    value = PrintStr(value);
+                Debug.WriteLine($"(Property) {prop.Name} = {value}");
             }
         }
     }
