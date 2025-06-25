@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,10 +28,16 @@ namespace Ozurah.Utils
          * 
          * 
          * 
-            Print des objets -> S'ils implémente le ToString, affichera le ToString
-                                Pour afficher la classe, il suffit de `Print(obj.GetType()())`
-            Print des struct
-            Print des namedtuple
+            Print des objets -> S'ils implémente le ToString, affichera le ToString / sinon, affichera la classe
+                                Pour afficher la classe au lieu du ToString, il suffit de `Print(obj.GetType()())`
+            Print des struct -> A l'instar des objets
+            Print des namedtuple -> Comme un simple tuple, on affiche pas le noms "items"
+
+            Print des types anonymes : non traité, Par exemple `new { a = 10, b = "str" }` s'affichera comme suit : `{ a = 10, b = str }`
+                                        (fonctionnement par défaut) ==> il y aura les {}, et pas de formatage pour le contenu
+                                        Exemple de détection
+                                            https://stackoverflow.com/questions/2483023/how-to-test-if-a-type-is-anonymous
+                                            https://stackoverflow.com/a/79255648
          * 
          */
 

@@ -1,4 +1,4 @@
-﻿using Ozurah.Utils;
+using Ozurah.Utils;
 using System.Windows;
 
 namespace DevUtils
@@ -84,6 +84,15 @@ namespace DevUtils
 
             Printer.Print(new List<City> { new() { Code = 10 }, new() }); //N'affichera pas la classe, mais le ToString
             Printer.Print(new City().GetType()); //N'affichera pas le ToString, mais la classe
+
+            (string a, int b) namedtuple = new("txt", 1);
+            Printer.Print(namedtuple);
+
+            var anonType = new { a = 10, b = "str" };
+            Printer.Print(anonType);
+
+            Printer.Print(new Coords(11, "txt"));
+            Printer.Print(new CoordsNoToString(11, "txt"));
         }
 
         private void Printer_2_Click(object sender, RoutedEventArgs e)
@@ -101,6 +110,40 @@ namespace DevUtils
 
             Printer.Print(1, 2L, 3f);
         }
+    }
+
+    public struct Structure
+    {
+        public int Id;
+        public string Name;
+    }
+
+    public struct CoordsNoToString
+    {
+        public CoordsNoToString(double x, string y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public double X { get; }
+        public string Y { get; }
+    }
+
+    public struct Coords
+    {
+        private double x;
+
+        public Coords(double x, string y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public double X { get { return x; } set { x = value; } }
+        public string Y { get; }
+
+        public override string ToString() => $"{X};{Y}";
     }
 
     public class Person
