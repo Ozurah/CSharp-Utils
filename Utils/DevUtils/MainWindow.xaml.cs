@@ -81,6 +81,9 @@ namespace DevUtils
             Printer.Print(new List<string> { "a", "b" }.ToArray());
             Printer.Print((1, 2, 3).AsEnumerable());
             Printer.Print((1, 2, 3).AsEnumerable().ToArray());
+
+            Printer.Print(new List<City> { new() { Code = 10 }, new() }); //N'affichera pas la classe, mais le ToString
+            Printer.Print(new City().GetType()); //N'affichera pas le ToString, mais la classe
         }
 
         private void Printer_2_Click(object sender, RoutedEventArgs e)
@@ -103,5 +106,15 @@ namespace DevUtils
     public class Person
     {
         public int Age { get; set; } = 20;
+    }
+
+    public class City
+    {
+        public int Code { get; set; } = 1234;
+
+        public override string ToString()
+        {
+            return $"{Code}";
+        }
     }
 }

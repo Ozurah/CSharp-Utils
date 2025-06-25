@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,7 +28,8 @@ namespace Ozurah.Utils
          * 
          * 
          * 
-            Print des objets
+            Print des objets -> S'ils implémente le ToString, affichera le ToString
+                                Pour afficher la classe, il suffit de `Print(obj.GetType()())`
             Print des struct
             Print des namedtuple
          * 
@@ -171,7 +172,7 @@ namespace Ozurah.Utils
                     }
                     else
                     {
-                        text += arg.ToString();
+                        text += arg; // .ToString non nécessaire, il est traité par défaut dans ce cas :)
                     }
                     text += indication.endSeq;
                 }
