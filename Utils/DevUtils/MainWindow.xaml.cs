@@ -1,4 +1,4 @@
-using Ozurah.Utils;
+﻿using Ozurah.Utils;
 using System.Windows;
 
 namespace DevUtils
@@ -91,6 +91,7 @@ namespace DevUtils
             var anonType = new { a = 10, b = "str" };
             Printer.Print(anonType);
 
+            Printer.Print(new Structure { Id = 1, Name = "Test" });
             Printer.Print(new Coords(11, "txt"));
             Printer.Print(new CoordsNoToString(11, "txt"));
         }
@@ -109,6 +110,18 @@ namespace DevUtils
             Printer.ResetIndicator();
 
             Printer.Print(1, 2L, 3f);
+        }
+
+        private void Printer_3_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.PrintObject(new Structure { Id = 1, Name = "Test" });
+            Printer.PrintObject(new Coords(1, "Test"));
+            Printer.PrintObject(new CoordsNoToString(1, "Test"));
+
+            (string a, int b) namedtuple = new("txt", 1);
+            Printer.PrintObject(namedtuple);
+
+            Printer.PrintObject(new Person());
         }
     }
 

@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -186,6 +187,28 @@ namespace Ozurah.Utils
             }
 
             return text;
+        }
+
+        public static void PrintObject(object obj)
+        {
+            // Permet d'afficher les champs/propriété publics d'un objet (ou struct)
+
+            Type type = obj.GetType();
+
+            WriteLine($"Struct Type = {type}");
+
+            // Champs (public uniquement), possibilité d'ajouter d'autres flags pour les privé par exemple
+            foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
+            {
+                Debug.WriteLine($"(Field) {field.Name} = {field.GetValue(obj)}");
+            }
+
+            // Propriétés (si le struct en a)
+            foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (prop.CanRead)
+                    Debug.WriteLine($"(Property) {prop.Name} = {prop.GetValue(obj)}");
+            }
         }
     }
 }
