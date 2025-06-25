@@ -1,4 +1,4 @@
-using Ozurah.Utils;
+﻿using Ozurah.Utils;
 using System.Windows;
 
 namespace DevUtils
@@ -81,11 +81,22 @@ namespace DevUtils
             Printer.Print(new List<string> { "a", "b" }.ToArray());
             Printer.Print((1, 2, 3).AsEnumerable());
             Printer.Print((1, 2, 3).AsEnumerable().ToArray());
+        }
 
-            Printer.WriteLine(Printer.Indicator);
-            //Printer.Indicator.TryAdd(typeof(int), ("int(", ")"));
-            //Printer.WriteLine(Printer.Indicator);
+        private void Printer_2_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.Print(1, 2L, 3f);
 
+            //if (Printer.Indicator.ContainsKey(typeof(int)))
+            //{
+            Printer.Indicator[typeof(int)] = ("int(", ")");
+            //}
+
+            Printer.Print(1, 2L, 3f);
+
+            Printer.ResetIndicator();
+
+            Printer.Print(1, 2L, 3f);
         }
     }
 

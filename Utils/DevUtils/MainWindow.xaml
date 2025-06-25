@@ -8,6 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="Printer_1" Content="Printer 1" HorizontalAlignment="Left" Margin="39,28,0,0" VerticalAlignment="Top" Click="Printer_1_Click"/>
+        <Button x:Name="Printer_2" Content="Printer dyn set" HorizontalAlignment="Left" Margin="39,65,0,0" VerticalAlignment="Top" Click="Printer_2_Click"/>
 
     </Grid>
 </Window>

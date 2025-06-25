@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,7 +36,7 @@ namespace Ozurah.Utils
 
         private const string NULL_REPR = "null";
 
-        public static OrderedDictionary<Type, (string startSeq, string endSeq)> Indicator { get; private set; } = new()
+        private static OrderedDictionary<Type, (string startSeq, string endSeq)> indicatorDefault = new()
         {
             // Les éléments de bases, servant à construire les autres via `BuildIndicatorFor`
             { typeof(string), ("\"", "\"") },
@@ -47,6 +47,13 @@ namespace Ozurah.Utils
             { typeof(ITuple), ("(", ")") },
             { typeof(IEnumerable), ("col(", ")") },
         };
+
+        public static OrderedDictionary<Type, (string startSeq, string endSeq)> Indicator { get; private set; } = new(indicatorDefault);
+
+        public static void ResetIndicator()
+        {
+            Indicator = new(indicatorDefault);
+        }
 
         public static void WriteLine(params object?[]? args)
         {
