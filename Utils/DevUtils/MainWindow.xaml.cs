@@ -69,10 +69,28 @@ namespace DevUtils
                 );
 
             Printer.Print(("tuple", 1, 2, 3, ("tuple tuple", 1, new object?[] { "a", 'b', 3, null })));
+
+            Printer.Print(new int[] { 1, 2, 3 }.ToArray());
+            Printer.Print(new List<object> { 1, 2, 3 });
+            Printer.Print(new List<object> { 1, 2, 3 }.ToArray());
+            Printer.Print(new List<Person> { new() { Age = 10 }, new() });
+            Printer.Print(new List<Person> { new() { Age = 10 }, new() }.ToArray());
+            Printer.Print(new List<Int32> { 1, 2, 3 });
+            Printer.Print(new List<Int32> { 1, 2, 3 }.ToArray());
+            Printer.Print(new List<string> { "a", "b" });
+            Printer.Print(new List<string> { "a", "b" }.ToArray());
+            Printer.Print((1, 2, 3).AsEnumerable());
+            Printer.Print((1, 2, 3).AsEnumerable().ToArray());
+
             Printer.WriteLine(Printer.Indicator);
             //Printer.Indicator.TryAdd(typeof(int), ("int(", ")"));
             //Printer.WriteLine(Printer.Indicator);
 
         }
+    }
+
+    public class Person
+    {
+        public int Age { get; set; } = 20;
     }
 }

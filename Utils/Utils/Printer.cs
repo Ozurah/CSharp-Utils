@@ -78,9 +78,6 @@ namespace Ozurah.Utils
                 // Check 2 : Objet existant vers un générique
                 foreach (var kv in Indicator)
                 {
-                    WriteLine(kv.Key);
-                    WriteLine(obj);
-
                     if (obj.GetType().IsGenericType && kv.Key.IsGenericType && kv.Key.IsAssignableFrom(obj.GetType().GetGenericTypeDefinition()))
                     {
                         Indicator.Insert(0, obj.GetType(), kv.Value);
