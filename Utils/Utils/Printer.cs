@@ -42,6 +42,15 @@ namespace Ozurah.Utils
          * 
          */
 
+        public enum WriteLineMode
+        {
+            Console,
+            Debug,
+            Silent,
+        }
+
+        public static WriteLineMode UsedWriteLineMode { get; set; } = Printer.WriteLineMode.Debug;
+
         private const string NULL_REPR = "null";
 
         private static OrderedDictionary<Type, (string startSeq, string endSeq)> indicatorDefault = new()
@@ -65,11 +74,25 @@ namespace Ozurah.Utils
 
         public static void WriteLine(params object?[]? args)
         {
-            Debug.WriteLine(
-                args is null ?
+            string txt = args is null ?
                 NULL_REPR :
-                string.Join(", ", args.Select(x => x ?? NULL_REPR))
-            );
+                string.Join(", ", args.Select(x => x ?? NULL_REPR));
+
+            switch (UsedWriteLineMode)
+            {
+                case WriteLineMode.Console:
+                    Console.WriteLine(txt);
+                    break;
+                case WriteLineMode.Debug:
+                    Debug.WriteLine(txt);
+                    break;
+                case WriteLineMode.Silent:
+                    break; // Pas de sortie
+                default:
+                    Debug.WriteLine("!! Mode non géré, affichage dans la sortie de debug !!as");
+                    Debug.WriteLine(txt);
+                    break;
+            }
         }
 
         public static void Print(params object?[]? args)

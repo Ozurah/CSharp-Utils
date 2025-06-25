@@ -1,4 +1,5 @@
 ﻿using Ozurah.Utils;
+using System.Diagnostics;
 using System.Windows;
 
 namespace DevUtils
@@ -137,6 +138,25 @@ namespace DevUtils
 
                 Printer.PrintObject(new Person(), true);
             }
+        }
+
+        private void Printer_4_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("***** Printer mode Debug");
+            Printer.UsedWriteLineMode = Printer.WriteLineMode.Debug;
+            Printer.Print("a", 1, true);
+
+            Debug.WriteLine("***** Printer mode Console");
+            Printer.UsedWriteLineMode = Printer.WriteLineMode.Console;
+            Printer.Print("a", 1, true);
+
+            Debug.WriteLine("***** Printer mode Silent");
+            Printer.UsedWriteLineMode = Printer.WriteLineMode.Silent;
+            Printer.Print("a", 1, true);
+
+            Debug.WriteLine("***** RESET Printer mode to Debug");
+            Printer.UsedWriteLineMode = Printer.WriteLineMode.Debug;
+            Printer.Print("a", 1, true);
         }
     }
 
