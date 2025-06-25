@@ -51,6 +51,9 @@ namespace Ozurah.Utils
 
         public static WriteLineMode UsedWriteLineMode { get; set; } = Printer.WriteLineMode.Debug;
 
+        public static Func<string>? WriteLinePrefix { get; set; } = null;
+        public static Func<string>? WriteLineSuffix { get; set; } = null;
+
         private const string NULL_REPR = "null";
 
         private static OrderedDictionary<Type, (string startSeq, string endSeq)> indicatorDefault = new()
@@ -77,6 +80,11 @@ namespace Ozurah.Utils
             string txt = args is null ?
                 NULL_REPR :
                 string.Join(", ", args.Select(x => x ?? NULL_REPR));
+
+            string prefix = WriteLinePrefix is null ? "" : WriteLinePrefix() + " ";
+            string suffix = WriteLineSuffix is null ? "" : " " + WriteLineSuffix();
+
+            txt = prefix + txt + suffix;
 
             switch (UsedWriteLineMode)
             {

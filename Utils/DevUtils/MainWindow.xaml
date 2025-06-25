@@ -11,6 +11,6 @@
         <Button x:Name="Printer_2" Content="Printer print dyn set" HorizontalAlignment="Left" Margin="39,65,0,0" VerticalAlignment="Top" Click="Printer_2_Click"/>
         <Button x:Name="Printer_3" Content="Printer print object" HorizontalAlignment="Left" Margin="39,102,0,0" VerticalAlignment="Top" Click="Printer_3_Click"/>
         <Button x:Name="Printer_4" Content="Printer print modes" HorizontalAlignment="Left" Margin="39,139,0,0" VerticalAlignment="Top" Click="Printer_4_Click"/>
-
+        <Button x:Name="Printer_5" Content="Printer print pre/suffix" HorizontalAlignment="Left" Margin="39,176,0,0" VerticalAlignment="Top" Click="Printer_5_Click"/>
     </Grid>
 </Window>

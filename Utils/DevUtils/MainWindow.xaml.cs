@@ -158,6 +158,22 @@ namespace DevUtils
             Printer.UsedWriteLineMode = Printer.WriteLineMode.Debug;
             Printer.Print("a", 1, true);
         }
+
+        private void Printer_5_Click(object sender, RoutedEventArgs e)
+        {
+            string smiley = ":D";
+            Printer.WriteLinePrefix = DateTime.Now.ToString;
+            Printer.WriteLineSuffix = () => smiley;
+
+            Printer.WriteLine("test");
+
+            smiley = ";)";
+
+            Printer.WriteLine("test");
+
+            Printer.WriteLinePrefix = null;
+            Printer.WriteLineSuffix = null;
+        }
     }
 
     public struct Structure
