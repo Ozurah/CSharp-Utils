@@ -1,4 +1,4 @@
-namespace Ozurah.Utils.Enums
+﻿namespace Ozurah.Utils.Enums
 {
     // Note : Nammed "Enum utils" (instead of simply "Enums") to avoid issue if call "Enums.XXX" inside our "Enum data classes" (their namespace override this one)
     // Note : Having generics is more "confortable" instead typing everytime "typeof(XXX)"
@@ -11,7 +11,11 @@ namespace Ozurah.Utils.Enums
     public static class EnumUtils<T> where T : struct, Enum
     {
         // IsDefined source : https://stackoverflow.com/questions/13248869/c-sharp-enum-contains-value
-
+        /// <summary>
+        /// Alias for <see cref="Enum.IsDefined(Type, object)"/> <br/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>Is the name / value exists in the enum ; <see langword="null"/> -> <see langword="false"/></returns>
         public static bool IsDefined(object? value)
         {
             if (value is null) return false;
