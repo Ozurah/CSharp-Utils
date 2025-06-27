@@ -202,6 +202,41 @@ namespace DevUtils
                 Debug.WriteLine(ex.Message);
             }
         }
+
+        private void Enum_2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Category bstring = (Category)"B"; // Non possible, contrairement aux int :(
+                Category bint = (Category)22;
+                Category[] collection = EnumUtils<Category>.ToArray();
+                Category bstring = EnumUtils<Category>.FromString("B");
+
+                try
+                {
+                    Category XYZ = EnumUtils<Category>.FromString("XYZ");
+                }
+                catch (ArgumentException)
+                {
+                    Debug.WriteLine("Exception OK");
+                }
+
+                try
+                {
+                    Category bstring2 = EnumUtils<Category>.FromString("b");
+                }
+                catch (ArgumentException)
+                {
+                    Debug.WriteLine("Exception OK");
+                }
+
+                Category bstring3 = EnumUtils<Category>.FromString("b", true);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
     }
 
     public struct Structure
