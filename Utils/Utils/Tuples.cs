@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Ozurah.Utils
+namespace Ozurah.Utils.Tuples
 {
-    public static class Extensions
+    public static class Tuples
     {
         public static IEnumerable<object> AsEnumerable(this ITuple tuple)
         {

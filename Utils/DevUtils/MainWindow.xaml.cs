@@ -1,4 +1,5 @@
-﻿using Ozurah.Utils;
+using Ozurah.Utils;
+using Ozurah.Utils.Tuples;
 using System.Diagnostics;
 using System.Windows;
 
