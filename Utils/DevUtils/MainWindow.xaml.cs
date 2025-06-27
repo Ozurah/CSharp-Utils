@@ -1,4 +1,5 @@
 using Ozurah.Utils;
+using Ozurah.Utils.Enums;
 using Ozurah.Utils.Tuples;
 using System.Diagnostics;
 using System.Windows;
@@ -176,6 +177,30 @@ namespace DevUtils
 
             Printer.WriteLinePrefix = null;
             Printer.WriteLineSuffix = null;
+        }
+
+        private void Enum_1_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Category? aa = null;
+                String? aaa = null;
+                string aaaa = null;
+                var id = EnumUtils<Category>.IsDefined(aa);
+                var id2 = EnumUtils<Category>.IsDefined(aaa);
+                var id3 = EnumUtils<Category>.IsDefined(aaaa);
+                var id4 = EnumUtils<Category>.IsDefined((Category)22);
+                var id5 = EnumUtils<Category>.IsDefined((Category)10);
+                var id6 = EnumUtils<Category>.IsDefined("A");
+                var id7 = EnumUtils<Category>.IsDefined(22);
+                var c = Enum.GetValues<Category>();
+                var r = EnumUtils<Category>.ToArray();
+                var ttt = Enum.IsDefined(typeof(Category), "aa");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 
