@@ -207,8 +207,19 @@ namespace DevUtils
         {
             try
             {
+
+
                 //Category bstring = (Category)"B"; // Non possible, contrairement aux int :(
-                Category bint = (Category)22;
+                Category bint = (Category)22; // Ne lève pas d'exception, même si 22 n'est pas présent dans l'enum...
+                try
+                {
+                    EnumUtils<Category>.ThrowIfUnkownValue(22); // Ici on a l'exception :)
+                }
+                catch (ArgumentException)
+                {
+                    Debug.WriteLine("Exception OK");
+                }
+
                 Category[] collection = EnumUtils<Category>.ToArray();
                 Category bstring = EnumUtils<Category>.FromString("B");
 
@@ -292,5 +303,11 @@ namespace DevUtils
     {
         A,
         B = 10
+    }
+
+    public enum Category2
+    {
+        A,
+        C = 10,
     }
 }

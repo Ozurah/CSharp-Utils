@@ -12,24 +12,11 @@ namespace Ozurah.Utils.Enums
     {
         // IsDefined source : https://stackoverflow.com/questions/13248869/c-sharp-enum-contains-value
 
-        public static bool IsDefined(string? name)
-        {
-            if (name is null) return false;
-            return Enum.IsDefined(typeof(T), name);
-        }
-
-        public static bool IsDefined(T? value)
+        public static bool IsDefined(object? value)
         {
             if (value is null) return false;
             return Enum.IsDefined(typeof(T), value);
         }
-
-        public static bool IsDefined(int? value)
-        {
-            if (value is null) return false;
-            return Enum.IsDefined(typeof(T), value);
-        }
-
 
         /// <summary>
         /// If <paramref name="value"/> is not defined for the enum, throw an <see cref="ArgumentException"/> with <paramref name="message"/>
@@ -37,12 +24,15 @@ namespace Ozurah.Utils.Enums
         /// <param name="value"></param>
         /// <param name="message"></param>
         /// <exception cref="ArgumentException"></exception>
-        public static void ThrowIfUnkownValue(T value, string message)
+        /// <exception cref="ArgumentNullException"></exception>
+        public static void ThrowIfUnkownValue(object? value, string? message = null)
         {
+            message ??= $"Value '{value}' is not defined for enum '{typeof(T).Name}'";
+
+            if (value is null) throw new ArgumentNullException(nameof(value), message);
+
             if (!IsDefined(value))
-            {
                 throw new ArgumentException(message);
-            }
         }
 
         /// <summary>
