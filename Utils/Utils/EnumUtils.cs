@@ -1,6 +1,5 @@
 ﻿namespace Ozurah.Utils.Enums
 {
-    // Note : Nammed "Enum utils" (instead of simply "Enums") to avoid issue if call "Enums.XXX" inside our "Enum data classes" (their namespace override this one)
     // Note : Having generics is more "confortable" instead typing everytime "typeof(XXX)"
 
     /// <summary>
@@ -8,7 +7,7 @@
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <remarks> This class provide aliases or additionals methods for <see cref="Enum"/></remarks>
-    public static class EnumUtils<T> where T : struct, Enum
+    public static class Enums<T> where T : struct, Enum
     {
         // IsDefined source : https://stackoverflow.com/questions/13248869/c-sharp-enum-contains-value
         /// <summary>

@@ -186,15 +186,15 @@ namespace DevUtils
                 Category? aa = null;
                 String? aaa = null;
                 string aaaa = null;
-                var id = EnumUtils<Category>.IsDefined(aa);
-                var id2 = EnumUtils<Category>.IsDefined(aaa);
-                var id3 = EnumUtils<Category>.IsDefined(aaaa);
-                var id4 = EnumUtils<Category>.IsDefined((Category)22);
-                var id5 = EnumUtils<Category>.IsDefined((Category)10);
-                var id6 = EnumUtils<Category>.IsDefined("A");
-                var id7 = EnumUtils<Category>.IsDefined(22);
+                var id = Enums<Category>.IsDefined(aa);
+                var id2 = Enums<Category>.IsDefined(aaa);
+                var id3 = Enums<Category>.IsDefined(aaaa);
+                var id4 = Enums<Category>.IsDefined((Category)22);
+                var id5 = Enums<Category>.IsDefined((Category)10);
+                var id6 = Enums<Category>.IsDefined("A");
+                var id7 = Enums<Category>.IsDefined(22);
                 var c = Enum.GetValues<Category>();
-                var r = EnumUtils<Category>.ToArray();
+                var r = Enums<Category>.ToArray();
                 var ttt = Enum.IsDefined(typeof(Category), "aa");
             }
             catch (Exception ex)
@@ -213,19 +213,19 @@ namespace DevUtils
                 Category bint = (Category)22; // Ne lève pas d'exception, même si 22 n'est pas présent dans l'enum...
                 try
                 {
-                    EnumUtils<Category>.ThrowIfUnkownValue(22); // Ici on a l'exception :)
+                    Enums<Category>.ThrowIfUnkownValue(22); // Ici on a l'exception :)
                 }
                 catch (ArgumentException)
                 {
                     Debug.WriteLine("Exception OK");
                 }
 
-                Category[] collection = EnumUtils<Category>.ToArray();
-                Category bstring = EnumUtils<Category>.FromString("B");
+                Category[] collection = Enums<Category>.ToArray();
+                Category bstring = Enums<Category>.FromString("B");
 
                 try
                 {
-                    Category XYZ = EnumUtils<Category>.FromString("XYZ");
+                    Category XYZ = Enums<Category>.FromString("XYZ");
                 }
                 catch (ArgumentException)
                 {
@@ -234,14 +234,14 @@ namespace DevUtils
 
                 try
                 {
-                    Category bstring2 = EnumUtils<Category>.FromString("b");
+                    Category bstring2 = Enums<Category>.FromString("b");
                 }
                 catch (ArgumentException)
                 {
                     Debug.WriteLine("Exception OK");
                 }
 
-                Category bstring3 = EnumUtils<Category>.FromString("b", true);
+                Category bstring3 = Enums<Category>.FromString("b", true);
             }
             catch (Exception ex)
             {
