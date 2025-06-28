@@ -1,6 +1,7 @@
-using Ozurah.Utils;
+ï»¿using Ozurah.Utils;
 using Ozurah.Utils.Enums;
 using Ozurah.Utils.Tuples;
+using Ozurah.Utils.Unity;
 using System.Diagnostics;
 using System.Windows;
 
@@ -15,6 +16,9 @@ namespace DevUtils
         {
             InitializeComponent();
             Class1.HelloWorld();
+
+            UnityEngine.Vector2 v2 = HelloUnity.V3to2(new UnityEngine.Vector3(1, 2, 3));
+            Printer.Print($"{v2.x}, {v2.y}");
         }
 
         private void Printer_1_Click(object sender, RoutedEventArgs e)
@@ -210,7 +214,7 @@ namespace DevUtils
 
 
                 //Category bstring = (Category)"B"; // Non possible, contrairement aux int :(
-                Category bint = (Category)22; // Ne lève pas d'exception, même si 22 n'est pas présent dans l'enum...
+                Category bint = (Category)22; // Ne lÃ¨ve pas d'exception, mÃªme si 22 n'est pas prÃ©sent dans l'enum...
                 try
                 {
                     Enums<Category>.ThrowIfUnkownValue(22); // Ici on a l'exception :)

@@ -1,0 +1,3 @@
+Unity ->
+	Unity\Hub\Editor\6000.1.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll
+	Unity\Hub\Editor\6000.1.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.SharedInternalsModule.dll

@@ -7,7 +7,6 @@ namespace Ozurah.Utils
         public static void HelloWorld()
         {
             Debug.WriteLine("Hello from Ozurah.Utils !");
-
         }
     }
 }

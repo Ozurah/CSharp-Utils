@@ -1,4 +1,6 @@
-﻿namespace Ozurah.Utils.Enums
+﻿using System;
+
+namespace Ozurah.Utils.Enums
 {
     // Note : Having generics is more "confortable" instead typing everytime "typeof(XXX)"
 
@@ -44,7 +46,7 @@
         /// <returns></returns>
         public static T[] ToArray()
         {
-            return Enum.GetValues<T>();
+            return (T[])Enum.GetValues(typeof(T));
         }
 
         /// <summary>
@@ -59,7 +61,7 @@
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Name cannot be null or empty", nameof(name));
 
-            return Enum.Parse<T>(name, ignoreCase);
+            return (T)Enum.Parse(typeof(T), name, ignoreCase);
         }
     }
 }

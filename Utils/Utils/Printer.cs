@@ -48,6 +48,7 @@ namespace Ozurah.Utils
             Console,
             Debug,
             Silent,
+            UnityLog,
         }
 
         public static WriteLineMode UsedWriteLineMode { get; set; } = Printer.WriteLineMode.Debug;
@@ -57,7 +58,7 @@ namespace Ozurah.Utils
 
         private const string NULL_REPR = "null";
 
-        private static OrderedDictionary<Type, (string startSeq, string endSeq)> indicatorDefault = new()
+        private static Dictionary<Type, (string startSeq, string endSeq)> indicatorDefault = new()
         {
             // Les éléments de bases, servant à construire les autres via `BuildIndicatorFor`
             { typeof(string), ("\"", "\"") },
@@ -69,7 +70,7 @@ namespace Ozurah.Utils
             { typeof(IEnumerable), ("col(", ")") },
         };
 
-        public static OrderedDictionary<Type, (string startSeq, string endSeq)> Indicator { get; private set; } = new(indicatorDefault);
+        public static Dictionary<Type, (string startSeq, string endSeq)> Indicator { get; private set; } = new(indicatorDefault);
 
         public static void ResetIndicator()
         {
@@ -97,6 +98,9 @@ namespace Ozurah.Utils
                     break;
                 case WriteLineMode.Silent:
                     break; // Pas de sortie
+                case WriteLineMode.UnityLog:
+                    UnityEngine.Debug.Log(txt);
+                    break;
                 default:
                     Debug.WriteLine("!! Mode non géré, affichage dans la sortie de debug !!as");
                     Debug.WriteLine(txt);
@@ -118,7 +122,7 @@ namespace Ozurah.Utils
                 // Check 1 : Tableau
                 if (obj.GetType().IsArray)
                 {
-                    Indicator.Insert(0, obj.GetType(), Indicator[typeof(object[])]);
+                    Indicator.Add(obj.GetType(), Indicator[typeof(object[])]);
                     return;
                 }
 
@@ -127,7 +131,7 @@ namespace Ozurah.Utils
                 {
                     if (obj.GetType().IsGenericType && kv.Key.IsGenericType && kv.Key.IsAssignableFrom(obj.GetType().GetGenericTypeDefinition()))
                     {
-                        Indicator.Insert(0, obj.GetType(), kv.Value);
+                        Indicator.Add(obj.GetType(), kv.Value);
                         return;
                     }
                 }
@@ -137,13 +141,13 @@ namespace Ozurah.Utils
                 {
                     if (kv.Key.IsInstanceOfType(obj))
                     {
-                        Indicator.Insert(0, obj.GetType(), kv.Value);
+                        Indicator.Add(obj.GetType(), kv.Value);
                         return;
                     }
                 }
 
                 // Check 4 : Non trouvé
-                Indicator.Insert(0, obj.GetType(), ("", ""));
+                Indicator.Add(obj.GetType(), ("", ""));
             }
         }
 
